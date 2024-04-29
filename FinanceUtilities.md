@@ -7,8 +7,6 @@
     - [Finance Utilities Connections](#finance-utilities-connections)
         - [Web API Endpoint](#web-api-endpoint)
             - [Create new Web API Type](#create-new-web-api-type)
-            - 
-
 <!-- /TOC -->
 
 ## Overview  
