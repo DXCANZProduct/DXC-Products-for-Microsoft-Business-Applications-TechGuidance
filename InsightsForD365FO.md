@@ -93,6 +93,30 @@ internal final class BusinessEventsPublisher_DXCInsights_Extension
 }
 ```
 
+You can also add custom dimensions to the telemetry. Create a Map with both the Key  and Value types as String, and pass it to the relevent method in the DXCInsightsLogEvents class. The example below shows how to log telemetry with custom dimensions on business event publishment:   
+```x++
+[ExtensionOf(classStr(BusinessEventsPublisher))]
+internal final class BusinessEventsPublisher_DXCInsights_Extension
+{
+    public void publish(BusinessEventsBase _businessEvent)
+    {
+        next publish(_businessEvent);
+
+        if (DXCInsightsFeature::isEnabled())
+        {
+            Map eventDimensionsMap = new Map(Types::String, Types::String);
+            eventDimensionsMap.insert('Event contract', classId2Name(classIdGet(_businessEvent.getBusinessEventsContract())));
+            eventDimensionsMap.insert('Event id', _businessEvent.getBusinessEventsContract().parmBusinessEventId(););
+
+            DXCInsightsLogEvents::logEvent(
+                DXCInsightsLogEventContract::newFromTypeAndName(
+                    DXCInsightsLoggingType::LogBusinessEvents,  _businessEvent.getBusinessEventsContract().parmBusinessEventId(), eventDimensionsMap));
+                        
+        }
+    }
+}
+```
+
 ### Additional loggers
 1. Implement the DXCInsightsILoggerApp interface
 
