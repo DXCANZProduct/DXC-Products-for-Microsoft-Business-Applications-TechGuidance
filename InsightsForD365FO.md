@@ -94,12 +94,10 @@ internal final class BusinessEventsPublisher_DXCInsights_Extension
 ```
 ### Custom dimensions in telemetry
 
-You can add or modify custom dimensions that are being sent from the ISV. YThe followinf classes and methods are available for extension: 
- * DXCInsightsLogEventContract - newFromTypeAndName(...)
- * DXCInsightsLogRequestContract - newFromTypeNameAndHttpMethod(...)
- * DXCInsightsLogPageViewContract - newFromTypeNameAndHttpMethod(...)
-   
-You can create an extension class and modify the '_customDimensions' parameter.The '_customDimensions' is a Map with Key and Value types as String. The example below shows how to customize dimensions on telemetry logging for DMf and business event publishment:   
+You can add or modify custom dimensions that are being sent from the ISV on the following class and method:
+* DXCInsightsLogEventContract - newFromTypeAndName(...)
+     
+You can create an extension class and modify the '_customDimensions' parameter.The '_customDimensions' is a Map with Key and Value types as String. The example below shows how to customize dimensions on telemetry logging for DMF and business event publishment:   
 ```x++
 [ExtensionOf(classStr(DXCInsightsLogEventContract))]
 internal final class DXCInsightsLogEventContract_Extension
