@@ -92,27 +92,32 @@ internal final class BusinessEventsPublisher_DXCInsights_Extension
 
 }
 ```
+### Custom dimensions in telemetry
 
-You can also add custom dimensions to the telemetry. Create a Map with both the Key  and Value types as String, and pass it to the relevent method in the DXCInsightsLogEvents class. The example below shows how to log telemetry with custom dimensions on business event publishment:   
+You can add or modify custom dimensions that are being sent from the ISV. YThe followinf classes and methods are available for extension: 
+ * DXCInsightsLogEventContract - newFromTypeAndName(...)
+ * DXCInsightsLogRequestContract - newFromTypeNameAndHttpMethod(...)
+ * DXCInsightsLogPageViewContract - newFromTypeNameAndHttpMethod(...)
+   
+You can create an extension class and modify the '_customDimensions' parameter.The '_customDimensions' is a Map with Key and Value types as String. The example below shows how to customize dimensions on telemetry logging for DMf and business event publishment:   
 ```x++
-[ExtensionOf(classStr(BusinessEventsPublisher))]
-internal final class BusinessEventsPublisher_DXCInsights_Extension
+[ExtensionOf(classStr(DXCInsightsLogEventContract))]
+internal final class DXCInsightsLogEventContract_Extension
 {
-    public void publish(BusinessEventsBase _businessEvent)
-    {
-        next publish(_businessEvent);
-
-        if (DXCInsightsFeature::isEnabled())
+    public static DXCInsightsLogEventContract newFromTypeAndName(DXCInsightsLoggingType _loggingType, str _eventName, Map _customDimensions)
+    {        
+        if (_loggingType == DXCInsightsLoggingType::LogDMFErrors) // add custom dimensions for DMF Errors
         {
-            Map eventDimensionsMap = new Map(Types::String, Types::String);
-            eventDimensionsMap.insert('Event contract', classId2Name(classIdGet(_businessEvent.getBusinessEventsContract())));
-            eventDimensionsMap.insert('Event id', _businessEvent.getBusinessEventsContract().parmBusinessEventId(););
-
-            DXCInsightsLogEvents::logEvent(
-                DXCInsightsLogEventContract::newFromTypeAndName(
-                    DXCInsightsLoggingType::LogBusinessEvents,  _businessEvent.getBusinessEventsContract().parmBusinessEventId(), eventDimensionsMap));
-                        
+            _customDimensions.insert('SomeParameter', 'Value');
         }
+        else if (_loggingType == DXCInsightsLoggingType::LogBusinessEvents)   // add custom dimensions for Business event triggers
+        {
+            _customDimensions.insert('SomeBusinessEventParameter', 'BusinessEventValue');
+        }
+
+        DXCInsightsLogEventContract DXCInsightsLogEventContract = next newFromTypeAndName(_loggingType, _eventName, _customDimensions);
+
+        return DXCInsightsLogEventContract;
     }
 }
 ```
