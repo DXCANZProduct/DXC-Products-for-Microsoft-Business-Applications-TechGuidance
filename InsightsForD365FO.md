@@ -92,30 +92,34 @@ internal final class BusinessEventsPublisher_DXCInsights_Extension
 
 }
 ```
-### Custom dimensions in telemetry
+### Add or update custom dimensions in telemetry
+The logRequest, logPageView, and logEvent methods of the 'DXCInsightsLogEvents' class currently support custom dimensions which are included and sent as part of telemetry logging.
+To modify custom dimensions:
+1. Create a coc on these methods
+2. Access the 'customDimensions' in the __contract_ parameter of the method.
+3. Modify the 'customDimensions' by adding, or removing values.
 
-You can add or modify custom dimensions that are being sent from the ISV on the following class and method:
-* DXCInsightsLogEventContract - newFromTypeAndName(...)
-     
-You can create an extension class and modify the '_customDimensions' parameter.The '_customDimensions' is a Map with Key and Value types as String. The example below shows how to customize dimensions on telemetry logging for DMF and business event publishment:   
+The example below shows how to customize dimensions on telemetry logging for DMF and business event publishment:   
 ```x++
-[ExtensionOf(classStr(DXCInsightsLogEventContract))]
-internal final class DXCInsightsLogEventContract_Extension
+[ExtensionOf(classStr(DXCInsightsLogEvents))]
+internal final class DXCInsightsLogEvents_Extension
 {
-    public static DXCInsightsLogEventContract newFromTypeAndName(DXCInsightsLoggingType _loggingType, str _eventName, Map _customDimensions)
-    {        
-        if (_loggingType == DXCInsightsLoggingType::LogDMFErrors) // add custom dimensions for DMF Errors
+    public static void logEvent(DXCInsightsLogEventContract _eventContract)
+    {
+        Map customDimensionsMap = _eventContract.customDimensions;
+
+        if (_eventContract.loggingType == DXCInsightsLoggingType::LogDMFErrors) // add custom dimensions for DMF Errors
         {
-            _customDimensions.insert('SomeParameter', 'Value');
+            customDimensionsMap.insert('SomeParameter', 'Value');
         }
-        else if (_loggingType == DXCInsightsLoggingType::LogBusinessEvents)   // add custom dimensions for Business event triggers
+        else if (_eventContract.loggingType == DXCInsightsLoggingType::LogBusinessEvents)   // add custom dimensions for Business event triggers
         {
-            _customDimensions.insert('SomeBusinessEventParameter', 'BusinessEventValue');
+            customDimensionsMap.insert('SomeBusinessEventParameter', 'BusinessEventValue');
         }
 
-        DXCInsightsLogEventContract DXCInsightsLogEventContract = next newFromTypeAndName(_loggingType, _eventName, _customDimensions);
+        _eventContract.customDimensions = customDimensionsMap;
 
-        return DXCInsightsLogEventContract;
+        next logEvent(_eventContract);
     }
 }
 ```
