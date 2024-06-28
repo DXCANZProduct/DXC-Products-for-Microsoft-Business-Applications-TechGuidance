@@ -123,6 +123,23 @@ internal final class DXCInsightsLogEvents_Extension
     }
 }
 ```
+To enhance DMF events telemetry and Ledger journal posting telemetry with contextual data, custom dimensions can now be modified. To achieve this, extend the following methods:
+* DMF events telemetry
+    * Class - 'DMFStagingLog_DXCInsights_Extension'
+    * Method to extend - public static Map createCustomDimensionsMap( RecId _stagingLogRecId, 
+                                                DMFExecutionId         _dMFExecutionId,
+                                                DMFSourceTarget        _sourceOrTarget,
+                                                int                    _infologStartIndex,
+                                                DMFEntityName          _entityName,
+                                                RefRecId               _batchId,
+                                                DMFDefinitionGroupName _defGroupName,
+                                                str _messageStr)
+* Ledger journal posting errors telemetry
+    * Class - 'LedgerJournalCheckPost_DXCInsights_Extension'
+    * Method to extend - public Map createCustomDimensionsMap()
+
+#### Note
+When modifying custom dimensions, prioritize concise data and be cautious of performance impacts with excessive data.
 
 ### Additional loggers
 1. Implement the DXCInsightsILoggerApp interface
@@ -155,7 +172,7 @@ internal final class DXCInsightsLogEvents_Extension
  Create a CoC on the DXCInsightsLoggerFactory::getLoggerTypes() method and add your custom logger to the end of the loggers list.
  ![DXCInsightsLoggerFactory](IMAGES/DXCInsightsLoggerFactory.png)
 
-### Note
+#### Note
 
 To maintain optimal performance efficiency, it is important to ensure that telemetry logging to your custom loggers is performed asynchronously. By logging telemetry asynchronously, you can avoid blocking the execution of your application and improve its responsiveness.
 
