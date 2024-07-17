@@ -47,11 +47,15 @@ Create an extension class for the ESSReport* class. Below is sample code on how 
 
 
 [ExtensionOf(classStr(ESSReportPurchPurchaseOrder))] <br>
+
 public final class ESSReportPurchPurchaseOrder_Extension <br>
+
 {
     public void additionalAttachment(SysOutgoingEmailTable _sysOutgoingEmailTable, ECL_AutoPrintReportMgmt _autoPrintReportMgmt)  <br>
+    
     {
         next additionalAttachment(_sysOutgoingEmailTable, _autoPrintReportMgmt);  <br>
+        
         if (_sysOutgoingEmailTable.ECL_RefTableId == tablenum(VendPurchOrderJour))  <br>
         {
             VendPurchOrderJour vendPurchOrderJour = VendPurchOrderJour::findRecId(_sysOutgoingEmailTable.ECL_RefRecId); <br>
@@ -72,3 +76,44 @@ public final class ESSReportPurchPurchaseOrder_Extension <br>
          }
       }
  } 
+
+
+ ### Copy attachment method
+Below is sample code on how to attach to an email.
+
+public static void essCopyAttachmentToOutgoingEmail(
+
+        SysEmailItemId  _emailItemId, 
+        DocuTypeId      _docuType, 
+        TableId         _refTableId, 
+        RefRecId        _refRecId)
+    {
+        DocuRef                 docuRef;        
+        SysOutgoingEmailData    outgoingEmailData;
+        Filename                attachmentFileExtension;
+
+        select firstonly outgoingEmailData
+            order by DataId desc
+            where outgoingEmailData.EmailItemId == _emailItemId;
+        SysEmailDataId dataId = outgoingEmailData.DataId;
+
+        while select docuRef
+        where docuRef.RefTableId  == _refTableId && docuRef.RefRecId    == _refRecId &&
+              docuRef.TypeId       == _docuType &&
+              docuRef.Restriction  == DocuRestriction::External
+        {
+            if (docuRef.isValueAttached())
+            {
+                dataId++;
+                outgoingEmailData.EmailItemId   = _emailItemId;
+                outgoingEmailData.DataId        = dataId;
+                outgoingEmailData.EmailDataType = SysEmailDataType::Attachment;
+                outgoingEmailData.Data          = docuRef.getFileContentAsContainer();
+                outgoingEmailData.FileName      =  docuRef.docuValue().FileName;
+                attachmentFileExtension = '.' + docuRef.docuValue().FileType;
+                outgoingEmailData.FileExtension = attachmentFileExtension;
+                outgoingEmailData.insert();
+            }
+        }
+   }
+ 
