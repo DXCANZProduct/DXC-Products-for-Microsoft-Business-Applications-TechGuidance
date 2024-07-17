@@ -54,14 +54,14 @@ Create an extension class for the ESSReport* class. Below is sample code on how 
 public final class ESSReportPurchPurchaseOrder_Extension <br>
 
 {
-    public void additionalAttachment(SysOutgoingEmailTable _sysOutgoingEmailTable, ECL_AutoPrintReportMgmt _autoPrintReportMgmt)  <br>
+    public void additionalAttachment(SysOutgoingEmailTable _sysOutgoingEmailTable, ECL_AutoPrintReportMgmt _autoPrintReportMgmt)  
     
     {
-        next additionalAttachment(_sysOutgoingEmailTable, _autoPrintReportMgmt);  <br>
+        next additionalAttachment(_sysOutgoingEmailTable, _autoPrintReportMgmt);  
         
-        if (_sysOutgoingEmailTable.ECL_RefTableId == tablenum(VendPurchOrderJour))  <br>
+        if (_sysOutgoingEmailTable.ECL_RefTableId == tablenum(VendPurchOrderJour))  
         {
-            VendPurchOrderJour vendPurchOrderJour = VendPurchOrderJour::findRecId(_sysOutgoingEmailTable.ECL_RefRecId); <br>
+            VendPurchOrderJour vendPurchOrderJour = VendPurchOrderJour::findRecId(_sysOutgoingEmailTable.ECL_RefRecId); 
             
             if (vendPurchOrderJour)
             {
