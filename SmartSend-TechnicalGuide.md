@@ -6,7 +6,7 @@
 - Extension example
 
 
-# Overview
+# Installation Overview
 
 DXC Smart Business Form Email Manager for Microsoft Dynamics 365 Finance and Operations (or Smart Send) is a simple and smart solution for sending business forms and other reports to your customers and vendors.
 To install Smart Send, first check to make sure you have the latest copy of the installation files.
