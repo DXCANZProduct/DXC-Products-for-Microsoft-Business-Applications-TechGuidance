@@ -20,7 +20,7 @@ Refer to the following link on how to Manage third-party models and runtime pack
 SmartSend License is managed using DXC License Manager.
 
 ## Adding Custom Reports
-While out of the box functionality is for the business forms listed here (../Overview.md), the solution can be extended on further business forms or reports. This technical guide describes how the DXC Smart Business Form Email Manager solution can be extended by adding custom report.
+While out of the box functionality is for the business forms listed here (../../Overview.md), the solution can be extended on further business forms or reports. This technical guide describes how the DXC Smart Business Form Email Manager solution can be extended by adding custom report.
 
 Refer to the sample model file that demonstrates how to extend SmartSend to support Request for Quote report (note the Request for Quote is now supported by DXC Smart Business Form Email Manager).
 
