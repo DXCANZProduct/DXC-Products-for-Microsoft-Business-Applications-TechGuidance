@@ -117,3 +117,5 @@ public static void essCopyAttachmentToOutgoingEmail(
         }
    }
  
+## Extension example
+- [Extension example](SmartSendExtensionSample.zip) 
