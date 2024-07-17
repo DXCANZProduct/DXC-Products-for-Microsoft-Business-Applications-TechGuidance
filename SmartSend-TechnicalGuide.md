@@ -6,18 +6,21 @@
 - Extension example
 
 
-# Overview
+# Installation Overview
 
 DXC Smart Business Form Email Manager for Microsoft Dynamics 365 Finance and Operations (or Smart Send) is a simple and smart solution for sending business forms and other reports to your customers and vendors.
 To install Smart Send, first check to make sure you have the latest copy of the installation files.
 The solution is delivered as a deployable package only.
+
 Refer to the following link on how to Manage third-party models and runtime packages by using source control.
+(https://docs.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/dev-tools/manage-runtime-packages#deployable-packages-from-third-parties).
+
 
 # Licensing
 SmartSend License is managed using DXC License Manager.
 
 ## Adding Custom Reports
-While out of the box functionality is for the business forms listed here, the solution can be extended on further business forms or reports. This technical guide describes how the DXC Smart Business Form Email Manager solution can be extended by adding custom report.
+While out of the box functionality is for the business forms listed here (../Overview.md), the solution can be extended on further business forms or reports. This technical guide describes how the DXC Smart Business Form Email Manager solution can be extended by adding custom report.
 
 Refer to the sample model file that demonstrates how to extend SmartSend to support Request for Quote report (note the Request for Quote is now supported by DXC Smart Business Form Email Manager).
 
@@ -117,3 +120,5 @@ public static void essCopyAttachmentToOutgoingEmail(
         }
    }
  
+## Extension example
+- [Extension example](SmartSendExtensionSample.zip) 
