@@ -2,7 +2,7 @@
 # required metadata
 
 title: DXC Smart Send Technical Guide (Smart Send)
-description: Smart Send - Overview
+description: Smart Send - Technical Guide Overview
 author: 
 manager: Kym Parker
 ms.date: 2024-07-17
