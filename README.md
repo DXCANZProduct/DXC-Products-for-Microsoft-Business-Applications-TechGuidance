@@ -5,3 +5,4 @@ Products:
 - [Insights for D365FO](InsightsForD365FO.md)
 - [Finance Utilities](./FinanceUtilities.md)
 - [DXC Smart Business Form Email Manager (Smart Send)](SmartSend.md)
+- [DXC Smart Send Technical Guide - (Smart Send)](SmartSend-Technical Guide.md)
