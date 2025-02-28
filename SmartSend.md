@@ -54,7 +54,7 @@ While out of the box functionality is for the business forms listed [here](https
 Refer to the [sample model file](SmartSendExtensionSample.zip) that demonstrates how to extend SmartSend to support Request for Quote report (note the Request for Quote is now supported by DXC Smart Business Form Email Manager).
 
 ### Prerequisite
-Minimum solution required is DXC Smart Business Form Email Manager Version 10.0.0.10018.
+Minimum solution required is DXC Smart Business Form Email Manager Version 10.0.27.20220930.
 
 ### To extend a new Development - New report format
 To extend a new report format, there are 4 elements that need to be developed.
